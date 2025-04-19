@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonix - E-commerce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Enable smooth scrolling for the entire page */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            overflow-x: hidden; /* Only hide horizontal overflow */
+            margin: 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/001/402/322/large_2x/abstract-black-and-pink-banner-background-free-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .navbar {
+            background-color: #212121;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .nav-item.btn {
+            color: white;
+            transition: box-shadow 0.3s ease; /* Smooth transition for the glow effect */
+        }
+
+        .nav-item.btn:hover {
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6); /* Glowing effect */
+        }
+
+        .navbar-toggler {
+            border-color: gray;
+            background-color: gray;
+        }
+
+        .navbar-toggler-icon {
+            background-color: gray;
+        }
+
+        hr.custom {
+            width: 80%; /* Set the width to 80% of the parent container */
+            height: 5px; /* Set the height to make it thicker */
+            background-color: #a1a1a1; /* Change to your desired color */
+            border: none; /* Remove the default border */
+            margin: 20px auto; /* Center the hr and add margin */
+        }
+
+        .section {
+            padding: 60px 20px; /* Keep the padding as is */
+            color: white;
+            min-height: 60vh; /* Give each section a minimum height */
+            margin: 10%; /* Set margin to 10% on all sides */
+        }
+
+        .product-card {
+            background-color: rgba(73, 68, 68, 0.8);
+            border: 1px solid gray;
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .testimonial-card {
+            background-color: rgba(33, 33, 33, 0.8);
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .contact-form {
+            background-color: rgba(33, 33, 33, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer {
+            background-color: #161515;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 105, 180, 0.7);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: rgba(255, 105, 180, 1);
+        }
+
+        /* Add padding to fix scroll position under sticky header */
+        section[id] {
+            scroll-margin-top: 70px;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 10px;
+            }
+
+            .product-card {
+                width: 100%;
+            }
+        }
+        .product-card img {
+        width: 100%; /* Make the image take the full width of the card */
+        height: 200px; /* Set a fixed height for the images */
+        object-fit: cover; /* Ensure the image covers the area without distortion */
+        border-top-left-radius: 8px; /* Match the card's border radius */
+        border-top-right-radius: 8px; /* Match the card's border radius */
+    }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="70">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold mx-4" href="#" style="color: aliceblue;">Phonix</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item btn btn-outline-info fw-bold">
+                        <a class="nav-link" href="#home" style="color: aliceblue;">Home</a>
+                    </li>
+                    <li class="nav-item btn btn-outline-danger fw-bold">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item btn btn-outline-primary fw-bold">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item btn btn-outline-primary fw-bold">
+                        <a class="nav-link" href="cart.html">Cart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="section text-center">
+        <div class="container p-5">
+        <h1>Welcome to Phonix</h1>
+        <p>Your one-stop shop for the latest smartphones!</p>
+        <a href="#products" class="btn btn-outline-primary">View Phones</a>
+        </div>
+    </section>
+    <hr class="custom">
+    <section id="products" class="section">
+        <div class="container" style="margin-left: -15px; margin-right: -15px; background-color: rgba(53, 43, 43, 0.8); backdrop-filter: blur(10px); padding: 20px;">
+            <h2 class="text-center mb-5">Our Products</h2>
+            
+            <!-- Product Carousel -->
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPhone 13 Pro">
+                                    <div class="product-card-body">
+                                        <h4>iPhone 13 Pro</h4>
+                                        <p class="text-info">6.1-inch Super Retina XDR display</p>
+                                        <p>A15 Bionic chip, 5G capable, Pro camera system</p>
+                                        <p class="fw-bold">$999.00</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Samsung Galaxy S21">
+                                    <div class="product-card-body">
+                                        <h4>Samsung Galaxy S21</h4>
+                                        <p class="text-info">6.2-inch Dynamic AMOLED 2X</p>
+                                        <p>Exynos 2100, 5G, Triple camera system</p>
+                                        <p class="fw-bold">$799.99</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://images.unsplash.com/photo-1595941069915-4ebc5197c14a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Google Pixel 6">
+                                    <div class="product-card-body">
+                                        <h4>Google Pixel 6</h4>
+                                        <p class="text-info">6.4-inch OLED display</p>
+                                        <p>Google Tensor chip, 5G, Advanced camera system</p>
+                                        <p class="fw-bold">$599.00</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="OnePlus 9 Pro">
+                                    <div class="product-card-body">
+                                        <h4>OnePlus 9 Pro</h4>
+                                        <p class="text-info">6.7-inch Fluid AMOLED</p>
+                                        <p>Snapdragon 888, 5G, Hasselblad camera system</p>
+                                        <p class="fw-bold">$969.00</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://www.techspot.com/images2/news/bigimage/2020/12/2020-12-28-image-22.jpg" alt="Xiaomi Mi 11">
+                                    <div class="product-card-body">
+                                        <h4>Xiaomi Mi 11</h4>
+                                        <p class="text-info">6.81-inch AMOLED display</p>
+                                        <p>Snapdragon 888, 5G, 108MP camera</p>
+                                        <p class="fw-bold">$749.00</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    <img src="https://images.unsplash.com/photo-1603921326210-6edd2d60ca68?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sony Xperia 1 III">
+                                    <div class="product-card-body">
+                                        <h4>Sony Xperia 1 III</h4>
+                                        <p class="text-info">6.5-inch 4K HDR OLED</p>
+                                        <p>Snapdragon 888, 5G, ZEISS optics</p>
+                                        <p class="fw-bold">$1,299.99</p>
+                                        <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                                        <a href="#" class="btn btn-outline-info">View More model</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    <hr class="custom">
+    <section id="iphones" class="section">
+        <div class="container mt-3">
+            <h2 class="text-center mb-5">iPhones</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPhone 13 Pro">
+                        <div class="product-card-body">
+                            <h4>iPhone 13 Pro</h4>
+                            <p class="text-info">6.1-inch Super Retina XDR display</p>
+                            <p>A15 Bionic chip, 5G capable, Pro camera system</p>
+                            <p class="fw-bold">$999.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPhone 12">
+                        <div class="product-card-body">
+                            <h4>iPhone 12</h4>
+                            <p class="text-info">6.1-inch Super Retina XDR display</p>
+                            <p>A14 Bionic chip, 5G capable, Dual camera system</p>
+                            <p class="fw-bold">$799.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPhone SE">
+                        <div class="product-card-body">
+                            <h4>iPhone SE</h4>
+                            <p class="text-info">4.7-inch Retina HD display</p>
+                            <p>A13 Bionic chip, Compact design</p>
+                            <p class="fw-bold">$399.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="custom">
+    <section id="samsung-phones" class="section">
+        <div class="container mt-3">
+            <h2 class="text-center mb-5">Samsung Phones</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Samsung Galaxy S21">
+                        <div class="product-card-body">
+                            <h4>Samsung Galaxy S21</h4>
+                            <p class="text-info">6.2-inch Dynamic AMOLED display</p>
+                            <p>Exynos 2100, 5G capable, Triple camera system</p>
+                            <p class="fw-bold">$799.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Samsung Galaxy Note 20">
+                        <div class="product-card-body">
+                            <h4>Samsung Galaxy Note 20</h4>
+                            <p class="text-info">6.7-inch Super AMOLED display</p>
+                            <p>Exynos 990, S Pen support, Triple camera system</p>
+                            <p class="fw-bold">$999.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Samsung Galaxy A52">
+                        <div class="product-card-body">
+                            <h4>Samsung Galaxy A52</h4>
+                            <p class="text-info">6.5-inch Super AMOLED display</p>
+                            <p>Snapdragon 720G, Quad camera system</p>
+                            <p class="fw-bold">$349.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="custom">
+    <section id="google-pixel-phones" class="section">
+        <div class="container mt-3">
+            <h2 class="text-center mb-5">Google Pixel Phones</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Google Pixel 9">
+                        <div class="product-card-body">
+                            <h4>Google Pixel 9</h4>
+                            <p class="text-info">6.2-inch OLED display</p>
+                            <p>Google Tensor G3, Dual camera system, 5G capable</p>
+                            <p class="fw-bold">$899.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Google Pixel 9 Pro">
+                        <div class="product-card-body">
+                            <h4>Google Pixel 9 Pro</h4>
+                            <p class="text-info">6.7-inch LTPO OLED display</p>
+                            <p>Google Tensor G3, Triple camera system, 5G capable</p>
+                            <p class="fw-bold">$1,099.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Google Pixel 9 Pro Fold">
+                        <div class="product-card-body">
+                            <h4>Google Pixel 9 Pro Fold</h4>
+                            <p class="text-info">7.6-inch foldable OLED display</p>
+                            <p>Google Tensor G3, Quad camera system, 5G capable</p>
+                            <p class="fw-bold">$1,499.00</p>
+                            <a href="#" class="btn btn-outline-info">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="custom">
+    <section id="about" class="section text-center">
+        <h2>About Us</h2>
+        <p>At Phonix, we offer a wide range of smartphones from top brands. Our mission is to provide the best technology at affordable prices.</p>
+    </section>
+    <hr class="custom">
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Contact Us</h2>
+            <div class="contact-form">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control bg-dark text-white" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control bg-dark text-white" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control bg-dark text-white" id="subject" placeholder="Enter subject">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control bg-dark text-white" id="message" rows="4" placeholder="Enter your message"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to top button -->
+    <a id="back-to-top" class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-mid-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Products</h5>
+                <p>
+                    <a href="#" class="text-white" style="text-decoration: none;">iPhone</a>
+                </p>
+                <p>
+                    <a href="#" class="text-white" style="text-decoration: none;">Samsung</a>
+                </p>     
+                <p>
+                    <a href="#" class="text-white" style="text-decoration: none;">Vivo</a>
+                </p>
+                <p>
+                    <a href="#" class="text-white" style="text-decoration: none;">Realme</a>
+                </p> 
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Others</h5>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">Your Message</a>
+                    </p>
+                    <p>
+                        <a href="#about" class="text-white" style="text-decoration: none;">About us</a>
+                    </p>     
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">Help</a>
+                    </p> 
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
+                    <p>
+                        <i class="fa fa-home mr-3" aria-hidden="true"></i>Tupi South Cotabato
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope mr-3" aria-hidden="true"></i>phonix@gmail.com
+                    </p>
+                    <p>
+                        <i class="fa fa-phone mr-3" aria-hidden="true"></i> 09676745766
+                    </p>
+                    <p>
+                        <i class="fa fa-print mr-3" aria-hidden="true"></i> 09123456789
+                    </p>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <div class="col-md-15">
+                <p>Copyright @2020 All rights reserved by:
+                    <a href="#" style="text-decoration: none;">
+                        <strong class="text-warning">RestufiDevs</strong>
+                    </a>
+                </p>
+            </div>
+
+            <div class="col-md-15">
+                <div class="text-center text-md-right">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-google-plus"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show or hide the back-to-top button based on scroll position
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                document.getElementById("back-to-top").style.display = "block";
+            } else {
+                document.getElementById("back-to-top").style.display = "none";
+            }
+        };
+
+        // Scroll to top when the button is clicked
+        document.getElementById("back-to-top").addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize Bootstrap scrollspy
+        document.addEventListener('DOMContentLoaded', function() {
+            var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                target: '#navbarNav',
+                offset: 70
+            });
+        });
+    </script>
+</body>
+</html>
